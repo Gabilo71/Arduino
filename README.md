@@ -1,26 +1,29 @@
-# Arduino
-This is a short guide on how the project is giong to be built. it also contains the elementary structure of coding to ensure it is easier to undersatand.
+#arduino
 
-The main objective is to create a feeder for industry. In our case, it feeds steel sheets which have an exact width. To activate the feeder we will use a controller by buttons. The controller will share the data via digital pins. The project is suposed to be done with ArduinoUno, so the langauge program is Arduino. The hardware will consist of 3 motors to move the feeder and an electromagnet. The types of sensors we will use are both analogics and digitals. Some of they are limit switches, laser sensor, buttons (pull-down)...etc. The rest will be explained on the way along.
+Esta es una guía breve sobre cómo se va a construir el proyecto. También contiene la estructura elemental del código para asegurar que sea más fácil de entender.
+El objetivo principal es crear un alimentador para la industria. En nuestro caso, alimenta láminas de acero que tienen un ancho exacto. Para activar el alimentador utilizaremos un controlador mediante botones. El controlador compartirá los datos a través de pines digitales. El proyecto se supone que se hará con Arduino Uno, por lo que el lenguaje de programación será Arduino. El hardware consistirá en 3 motores para mover el alimentador y un electroimán. Los tipos de sensores que usaremos serán tanto analógicos como digitales. Algunos de ellos son finales de carrera, sensor láser, botones (pull-down)... etc. El resto se explicará sobre la marcha.
+Nota: el ancho podría cambiarse añadiendo un monitor serie. (Al final habrá algo de código; si deseas esta opción, simplemente reemplaza la función original por la que prefieras ___).
 
-Notice that width could be changed by adding some serail monitor. (some coding will be at the end, if you wish this option just go and a replace the original function for the one you prefer ___).
+--- CONSTRUCCIÓN DEL PROYECTO ---
+El proyecto necesita una base para soportar el alimentador y debe poder subir y bajar en posiciones determinadas. Se usarán algunas columnas como en la ilustración. Sobre la columna más grande colocaremos las cadenas para mover el alimentador de derecha a izquierda. En ambos lados pondremos los dos motores que permiten que el electroimán suba y baje en cualquiera de los dos lados. Luego conectaremos los motores a nuestro Arduino.
+Primero conectaremos los 3 motores a GND y a 5V. Los motores serán controlados desde un controlador de botones.
+Imagen
 
----BULDING THE STRUCTURE---
+--- FUNDAMENTOS DE PROGRAMACIÓN ---
+Llamaremos posición 1 cuando el alimentador esté con la lámina.
 
-The project needs a base to support the feeder and it has to be able to go up and down in a determinante positions. We will call the position 1 when the feeder sheet.
+Imagen posición 1
 
-Image position 1
+La posición 2 será cuando la lámina esté elevada hasta arriba.
 
-The position 2 will be when sheet is elevated to the top.
+Imagen posición 2
 
-image position 2
+La posición 3 será cuando el movimiento horizontal termine y se suponga que debe bajar.
 
-Position 3 will be when the horizontal move ends and is supposed to go down.
+Imagen posición 3
 
-image position 3
+La última posición es cuando el alimentador deja la lámina.
 
-Last position is when the feeder lay down the sheet.
+Imagen posición 4
 
-image position 4
-
-So
+Así que el alimentador se moverá de la posición 1 a la 4.
