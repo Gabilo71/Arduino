@@ -7,7 +7,7 @@ Nota: el ancho podría cambiarse añadiendo un monitor serie. (Al final habrá a
 --- CONSTRUCCIÓN DEL PROYECTO ---
 
 El proyecto necesita una base para soportar el alimentador y debe poder subir y bajar en posiciones determinadas. Se usarán algunas columnas como en la ilustración. Sobre la columna más grande colocaremos las cadenas para mover el alimentador de derecha a izquierda. En ambos lados pondremos los dos motores que permiten que el electroimán suba y baje en cualquiera de los dos lados. Luego conectaremos los motores a nuestro Arduino.
-Primero conectaremos los 3 motores a GND y a 5V. Los motores serán controlados desde un controlador de botones.
+Primero conectaremos los 3 motores a GND y a 5V con dos relés por motor para poder cambiarles el sentido de giro. Los motores serán controlados desde un controlador de botones.
 Imagen
 
 --- FUNDAMENTOS DE PROGRAMACIÓN ---
