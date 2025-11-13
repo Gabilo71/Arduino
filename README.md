@@ -10,7 +10,7 @@ El proyecto necesita una base para soportar el alimentador y debe poder subir y 
 Primero conectaremos los 3 motores a GND y a 5V con dos relés por motor para poder cambiarles el sentido de giro. Los motores serán controlados desde un controlador de botones.
 Imagen
 
---- FUNDAMENTOS DE PROGRAMACIÓN ---
+
 
 Llamaremos posición 1 cuando el alimentador esté con la lámina.
 
@@ -29,3 +29,9 @@ La última posición es cuando el alimentador deja la lámina.
 Imagen posición 4
 
 Así que el alimentador se moverá de la posición 1 a la 4.
+
+--- FUNDAMENTOS DE PROGRAMACIÓN ---
+
+SALIDAS 3 DIGITALES 13,12,11
+ENTRADAS 2,3,4,5,6
+
