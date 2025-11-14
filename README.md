@@ -8,30 +8,17 @@ Nota: el ancho podría cambiarse añadiendo un monitor serie. (Al final habrá a
 
 El proyecto necesita una base para soportar el alimentador y debe poder subir y bajar en posiciones determinadas. Se usarán algunas columnas como en la ilustración. Sobre la columna más grande colocaremos las cadenas para mover el alimentador de derecha a izquierda. En ambos lados pondremos los dos motores que permiten que el electroimán suba y baje en cualquiera de los dos lados. Luego conectaremos los motores a nuestro Arduino.
 Primero conectaremos los 3 motores a GND y a 5V con dos relés por motor para poder cambiarles el sentido de giro. Los motores serán controlados desde un controlador de botones.
-Imagen
-
-
 
 Llamaremos posición 1 cuando el alimentador esté con la lámina.
-
-Imagen posición 1
-
 La posición 2 será cuando la lámina esté elevada hasta arriba.
-
-Imagen posición 2
-
 La posición 3 será cuando el movimiento horizontal termine y se suponga que debe bajar.
-
-Imagen posición 3
-
 La última posición es cuando el alimentador deja la lámina.
-
-Imagen posición 4
-
 Así que el alimentador se moverá de la posición 1 a la 4.
 
 --- FUNDAMENTOS DE PROGRAMACIÓN ---
 
 SALIDAS 3 DIGITALES 13,12,11
 ENTRADAS 2,3,4,5,6
+
+Imagen en Arduino/Esquema básico de los pines a utilizar.png
 
