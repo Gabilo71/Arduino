@@ -2,11 +2,14 @@ int ali_delante, ali_atras, marcha, entrada, salida, motor_delante, motor_detras
 bool estado;
 void setup()
 {
+  //Entradas del sisitema
   pinMode(2,INPUT);
   pinMode(3,INPUT);
   pinMode(4,INPUT);
   pinMode(5,INPUT);
   pinMode(6,INPUT);
+
+  //Salidas del sistema
   pinMode(11,OUTPUT);
   pinMode(12,OUTPUT);
   pinMode(13,OUTPUT);
