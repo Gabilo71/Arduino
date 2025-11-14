@@ -1,18 +1,18 @@
-int ali_delante, ali_atras, marcha, entrada, salida, motor_delante, motor_detras, electroiman;
+int alimentador_delante=2, alimentador_atras=3, marcha=4, entrada=5, salida=6, motor_delante=11, motor_detras=12, electroiman=13;
 bool estado;
 void setup()
 {
-  //Entradas del sisitema
-  pinMode(2,INPUT);
-  pinMode(3,INPUT);
-  pinMode(4,INPUT);
-  pinMode(5,INPUT);
-  pinMode(6,INPUT);
+  //Entradas del sistema
+  pinMode(alimentador_delante,INPUT);
+  pinMode(alimentador_atras,INPUT);
+  pinMode(marcha,INPUT);
+  pinMode(entrada,INPUT);
+  pinMode(salida,INPUT);
 
   //Salidas del sistema
-  pinMode(11,OUTPUT);
-  pinMode(12,OUTPUT);
-  pinMode(13,OUTPUT);
+  pinMode(motor_delante,OUTPUT);
+  pinMode(motor_detras,OUTPUT);
+  pinMode(electroiman,OUTPUT);
 }
 
 void loop()
