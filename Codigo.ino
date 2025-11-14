@@ -30,14 +30,14 @@ void loop()
   estado_pieza_entrada=digitalRead(5);
   estado_pieza_salida=digitalRead(6);
 
-  //Condición para que el motor viaje hacia delante. Interreptures encendidos: entrada, marcha, 
+  //Condición para que el motor viaje hacia delante. Interruptores encendidos: entrada, marcha, 
   
   if (estado_marcha==1 && estado_pieza_entrada==1 && estado_alimentador_delante==0){
     //Suponemos las conciciones iniciales
     digitalWrite(pin_motor_detras,0);
     digitalWrite(pin_electroiman,0);
 
-    //enecendemos el motor
+    //Enecendemos el motor
     digitalWrite(pin_motor_delante,1);
     while (estado_alimentador_delante==0){
     }
@@ -46,9 +46,10 @@ void loop()
     electroiman_con_pieza=1;
   }
     else if (estado_pieza_salida==0 && electroiman_con_pieza==1 && estado_alimentador_atras==0) {  
-      //condiciones iniciales
+      //Condiciones iniciales
     digitalWrite(pin_electroiman,1);
     digitalWrite(pin_motor_delante,0);
+      //Delay para segurasrse que el electroimán coge la pieza
     delay(1000);
 
       
