@@ -1,4 +1,12 @@
 
+/*
+
+ARDUINO.INO
+PROYECTO: Alimentador en X
+DESARROLADORES: Gabriel Lopez & Ismael San Bartolomé
+
+*/
+
 //Definimos los pines de los elementos a utilizar de forma que si luego se conecta a otro pin solo haría falta realizar el cambio en el apartado siguiente.
 //Definimos los etados de estos que tomaran valores 0 o 1.
 
