@@ -32,7 +32,7 @@ void setup()
 void loop()
 {
   //Lecturas de los estados de los botones (Valores toman 0 o 1)
-  estado_alimentador_delante=digitalRead(2); 
+  estado_alimentador_delante=digitalRead(pin_alimentador_delante); 
   estado_alimentador_atras=digitalRead(3); 
   estado_marcha=digitalRead(4); 
   estado_pieza_entrada=digitalRead(5);
