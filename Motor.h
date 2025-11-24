@@ -6,10 +6,10 @@
 
 class Motor {
 	public:
-		explicit Motor(pin_alimentador_delante);
+		explicit Motor(pin_motor_delante);
 		void begin();
 	private:
-		pin_alimentador_delante;
+		pin_motor_delante;
 };
 
 #endif
