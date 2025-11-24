@@ -1,10 +1,10 @@
 
-#ifndef config_h
-#define config_h
+#ifndef Motor_h
+#define Motor_h
 
 #include<Arduino.h>
 
-class Motor{
+class Motor {
 	public:
 		explicit Motor(pin_alimentador_delante);
 		void begin();
