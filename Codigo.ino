@@ -1,4 +1,12 @@
 
+/*
+
+ARDUINO.INO
+PROYECTO: Alimentador en X
+DESARROLADORES: Gabriel Lopez & Ismael San Bartolomé
+
+*/
+
 //Definimos los pines de los elementos a utilizar de forma que si luego se conecta a otro pin solo haría falta realizar el cambio en el apartado siguiente.
 //Definimos los etados de estos que tomaran valores 0 o 1.
 
@@ -24,11 +32,11 @@ void setup()
 void loop()
 {
   //Lecturas de los estados de los botones (Valores toman 0 o 1)
-  estado_alimentador_delante=digitalRead(2); 
-  estado_alimentador_atras=digitalRead(3); 
-  estado_marcha=digitalRead(4); 
-  estado_pieza_entrada=digitalRead(5);
-  estado_pieza_salida=digitalRead(6);
+  estado_alimentador_delante=digitalRead(pin_alimentador_delante); 
+  estado_alimentador_atras=digitalRead(pin_alimentador_atras); 
+  estado_marcha=digitalRead(pin_marcha); 
+  estado_pieza_entrada=digitalRead(pin_pieza_entrada);
+  estado_pieza_salida=digitalRead(pin_pieza_salida);
 
   //Condición para que el motor viaje hacia delante. Interruptores encendidos: entrada, marcha, 
   
@@ -60,4 +68,3 @@ void loop()
     digitalWrite(pin_electroiman,0):
     }
   }
-
