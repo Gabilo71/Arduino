@@ -6,10 +6,10 @@
 
 class Motor {
 	public:
-		explicit Motor(pin_motor);
+		explicit Motor(int pin_motor);
 		void begin();
 	private:
-		pin_motor;
+		int pin_motor;
 };
 
 #endif
