@@ -27,6 +27,19 @@ void setup()
   pinMode(pin_motor_delante,OUTPUT);
   pinMode(pin_motor_detras,OUTPUT);
   pinMode(pin_electroiman,OUTPUT);
+  //Posición inicial de trabajo
+  estado_alimentador_atras=digitalRead(pin_alimentador_atras);
+  if (estado_alimentador_atras==0){
+  while(estado_alimentador_atras==0){
+    digitalWrite(11,1);
+    digitalWrite(13,0);
+    estado_alimentador_atras=digitalRead(pin_alimentador_atras);
+    }
+    digitalWrite(11,0);
+    digitalWrite(13,1);
+    delay(500);
+    digitalWrite(13,0);
+  }
 }
 
 void loop()
@@ -68,4 +81,3 @@ void loop()
     digitalWrite(pin_electroiman,0):
     }
   }
-
