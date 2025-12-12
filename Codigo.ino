@@ -1,124 +1,103 @@
+// ================== ENTRADAS (INPUT_PULLUP, activas LOW) ==================
+const int FC_Delante       = 2;   // LOW cuando toca final delante
+const int FC_Trasero       = 3;   // LOW cuando toca final atrás
+const int FC_Pieza_entrada  = 5;   // LOW cuando hay pieza delante
+const int FC_Pieza_salida   = 6;   // LOW cuando hay pieza detrás
+const int Boton_Start      = 4;   // LOW al pulsar
 
-/*
+// ================== SALIDAS ==================
+const int Motor_AvanceA     = 9;
+const int Motor_AvanceB     = 10;
+const int Motor_RetroA      = 11;
+const int Motor_RetroB      = 12;
+const int Electroiman      = 13;
 
-ARDUINO.INO
-PROYECTO: Alimentador en X
-DESARROLADORES: Gabriel Lopez & Ismael San Bartolomé
+// ============================================================
+bool automatico = false;   // Solo inicia tras pulsar START
+unsigned long delay_suelta = 1000;  // Retardo tras liberar zona trasera
 
-*/
+void setup() {
+  pinMode(FC_Delante, INPUT_PULLUP);
+  pinMode(FC_Trasero, INPUT_PULLUP);
+  pinMode(FC_Pieza_entrada, INPUT_PULLUP);
+  pinMode(FC_Pieza_salida, INPUT_PULLUP);
+  pinMode(Boton_Start, INPUT_PULLUP);
 
-//Definimos los pines de los elementos a utilizar de forma que si luego se conecta a otro pin solo haría falta realizar el cambio en el apartado siguiente.
-//Definimos los etados de estos que tomaran valores 0 o 1.
-//#include <arduino.h>
+  pinMode(Motor_AvanceA, OUTPUT);
+  pinMode(Motor_AvanceB, OUTPUT);
+  pinMode(Motor_RetroA, OUTPUT);
+  pinMode(Motor_RetroB, OUTPUT);
+  pinMode(Electroiman, OUTPUT);
 
-int pin_alimentador_delante=2, pin_alimentador_atras=3, pin_marcha=4, pin_pieza_entrada=5, pin_pieza_salida=6, pin_motor_delante=11, pin_motor_detras=10, pin_electroiman=13;
-bool estado_alimentador_delante, estado_alimentador_atras, estado_marcha,estado_pieza_entrada, estado_pieza_salida, estado_motor_delante, esatdo_motor_detras, estado_electroiman;
-int electroiman_con_pieza;
-bool estado;
+  detenerMotor();
+  digitalWrite(Electroiman, LOW);
 
-void setup()
-{
   Serial.begin(9600);
 
-  //Entradas del sistema
-  pinMode(pin_alimentador_delante,INPUT);
-  pinMode(pin_alimentador_atras,INPUT);
-  pinMode(pin_marcha,INPUT);
-  pinMode(pin_pieza_entrada,INPUT);
-  pinMode(pin_pieza_salida,INPUT);
+  posicion_inicial();   // Se posiciona atras al iniciar
 
-  //Salidas del sistema
-  pinMode(pin_motor_delante,OUTPUT);
-  pinMode(pin_motor_detras,OUTPUT);
-  pinMode(pin_electroiman,OUTPUT);
-  
-  if (posicion_inicial_trabajo(pin_alimentador_atras)==1){
-    Serial.println("Arranque seguro: Activado");
+  Serial.println("Esperando botón START para iniciar ciclo automático...");
+}
+
+// ============================================================
+
+void loop() {
+
+  // ----------- ESPERA PRIMERA PULSACIÓN PARA EMPEZAR -----------
+  if (!automatico) {
+    if (digitalRead(Boton_Start) == LOW) { // pulsado -> activo
+      automatico = true;
+      Serial.println(">>> Ciclo automático INICIADO");
+      delay(300);   // antirrebote básico
+    }
+    return;
+  }
+
+  // ===================== CICLO AUTOMÁTICO CONTINUO =======================
+
+  // Si hay pieza en la parte delantera -> recoger
+  if (digitalRead(FC_Pieza_entrada) == LOW) {
+    Serial.println("Hay pieza delante, yendo a recoger...");
+
+    moverAdelante();
+    while (digitalRead(FC_Delante) == HIGH); // Espera llegar al FC
+    detenerMotor();
+
+    digitalWrite(Electroiman, HIGH); // Coger pieza
+    delay(200);
+
+    moverAtras();
+    while (digitalRead(FC_Trasero) == HIGH); // Espera llegar atrás
+    detenerMotor();
+
+    // Si NO hay pieza detrás -> soltar
+    if (digitalRead(FC_Pieza_salida) == HIGH) {
+      Serial.println("Zona trasera libre -> dejando pieza");
+      digitalWrite(Electroiman, LOW);
+      delay(300);
+    } 
+    else {
+      Serial.println("Zona trasera ocupada, esperando a que retiren...");
+      while (digitalRead(FC_Pieza_salida) == LOW);  // espera que quiten
+      delay(delay_suelta);
+      digitalWrite(Electroiman, LOW);
+      Serial.println("Pieza depositada");
+    }
+  }
+
+  // Si no hay pieza delante pero sí detrás -> espera retirada
+  else if (digitalRead(FC_Pieza_salida) == LOW) {
+    Serial.println("Esperando a que retiren pieza trasera...");
+    while (digitalRead(FC_Pieza_salida) == LOW);
+    delay(500);
+  }
+
+  else {
+    Serial.println("Sin piezas disponibles -> esperando ciclo...");
+    delay(300);
   }
 }
 
-int posicion_inicial_trabajo(int pin_alimentador_atras){
-    lecturas_estados_pines();
-    if (estado_alimentador_atras==0){
-        Serial.println("Arranque seguro: Desactivado");
-        Serial.println("Preparando motor");
-    while(estado_alimentador_atras==0){
-      lecturas_estados_pines();
-        digitalWrite(pin_motor_detras,1);
-        electroiman(0);
-        
-    }
-    digitalWrite(pin_motor_detras,0);
-    /*electroiman(1); //Esto de aqui hay que verlo
-    delay(5000);
-    electroiman(0);
-    */
-    return 1;
-    }
-    else{
-        return 1;
-    }
+// ============================================================
+// ------------------------ FUNCIONES -------------------------
 
-}
-
-void lecturas_estados_pines(){
-  estado_alimentador_delante=digitalRead(pin_alimentador_delante); 
-  estado_alimentador_atras=digitalRead(pin_alimentador_atras); 
-  estado_marcha=digitalRead(pin_marcha); 
-  estado_pieza_entrada=digitalRead(pin_pieza_entrada);
-  estado_pieza_salida=digitalRead(pin_pieza_salida);
-  estado_electroiman=digitalRead(pin_electroiman);
-}
-
-void movimiento_adelante_motor(){
-    Serial.println("Descargando pieza");
-    electroiman(0);
-    delay(5000);
-    Serial.println("Apilador descargado");
-
-    Serial.println("Volviendo a posicion de carga");
-
-    while (estado_alimentador_delante==0){
-      lecturas_estados_pines();
-      digitalWrite(pin_motor_delante,1);
-    }
-    digitalWrite(pin_motor_delante,0);
-    Serial.println("Preparado para carga");
-}
-void movimiento_atras_motor(){
-    
-    Serial.println("Cargando pieza");
-    electroiman(1);
-    delay(5000);
-    Serial.println("Apilador cargado");
-
-    Serial.println("Transportando");
-
-    while (estado_alimentador_atras==0){
-      lecturas_estados_pines();
-      digitalWrite(pin_motor_detras,1);
-    }
-    digitalWrite(pin_motor_detras,0);
-    Serial.println("Preparado para descarga");
-}
-
-void electroiman(int estado){
-  digitalWrite(pin_electroiman,estado);
-}
-
-void loop()
-{
-  //Lecturas de los estados de los botones (Valores toman 0 o 1)
-  lecturas_estados_pines();
-  
-  if(estado_alimentador_atras==true&&estado_marcha==true&&estado_pieza_entrada==true){
-    movimiento_adelante_motor();
-  }
-
-
-  
-  if(estado_alimentador_delante==true&&estado_marcha==true&&estado_pieza_salida==false){
-    movimiento_atras_motor();
-  }
-
-  }
